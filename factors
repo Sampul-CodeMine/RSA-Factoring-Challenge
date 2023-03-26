@@ -1,0 +1,36 @@
+#!/usr/bin/python3
+
+"""Function to get multiple factors from numbers read from a file
+"""
+def get_factors(num: int):
+    """Start the first factor from 2"""
+    itr = 2
+
+    """if the number is less than 2, return None (no factor)"""
+    if num < 2:
+        return
+    
+    """while the number can be divided by the factor add 1 to the factor"""
+    while num % itr:
+        itr += 1
+    print(f"{num:.0f}={num/itr:.0f}*{itr:.0f}")
+
+
+if __name__ == "__main__":
+    from sys import argv as sa
+
+    if len(sa) == 2:
+        filename = sa[1]
+        try:
+            with open(filename, mode="r", encoding="utf-8") as file:
+                 one_line = file.readline()
+                 while one_line != "":
+                      number = int(one_line.split('\n')[0])
+                      get_factors(number)
+                      one_line = file.readline()
+        except FileNotFoundError:
+            pass
+        except IndexError:
+            pass
+    else:
+        exit()
