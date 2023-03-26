@@ -25,7 +25,7 @@ if __name__ == "__main__":
             with open(filename, mode="r", encoding="utf-8") as file:
                  one_line = file.readline()
                  while one_line != "":
-                      number = int(one_line)
+                      number = int(one_line.strip())
                       get_factors(number)
                       one_line = file.readline()
         except FileNotFoundError:
