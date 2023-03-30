@@ -1,36 +1,38 @@
 #!/usr/bin/python3
+"""Program to read a set of numbers from a file and get the factors"""
 
-"""Function to get multiple factors from numbers read from a file
-"""
-def get_factors(num: int):
-    """Start the first factor from 2"""
-    itr = 2
 
-    """if the number is less than 2, return None (no factor)"""
-    if num < 2:
+def get_factors(read_number):
+    """"Function to find 2 numbers that when multiplied will equal
+    read_number
+    """
+    init_factor = 2
+
+    if read_number < 2:
         return
-    
-    """while the number can be divided by the factor add 1 to the factor"""
-    while num % itr:
-        itr += 1
-    print("{}={}*{}".format(num, num//itr, itr))
+
+    while read_number % init_factor:
+        init_factor += 1
+    print("{:.0f}={:.0f}*{:.0f}".
+          format(read_number, read_number / init_factor, init_factor))
+
+
+def read_from_file(file_name):
+    try:
+        with open(file_name) as file:
+            line = file.readline()
+            while line != "":
+                number = int(line.split('\n')[0])
+                get_factors(number)
+                line = file.readline()
+    except FileNotFoundError:
+        pass
 
 
 if __name__ == "__main__":
-    from sys import argv as sa
+    from sys import argv
 
-    if len(sa) == 2:
-        filename = sa[1]
-        try:
-            with open(filename, mode="r", encoding="utf-8") as file:
-                 one_line = file.readline()
-                 while one_line != "":
-                      number = int(one_line.strip())
-                      get_factors(number)
-                      one_line = file.readline()
-        except FileNotFoundError:
-            pass
-        except IndexError:
-            pass
-    else:
+    if len(argv) != 2:
         exit()
+    filename = argv[1]
+    read_from_file(filename)
