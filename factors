@@ -2,34 +2,27 @@
 """Program to read a set of numbers from a file and get the factors"""
 
 
-def get_factors(read_number: int):
-    """"Function to find 2 numbers that when multiplied will equal
-    read_number
-    """
-    while read_number % 2 == 0:
-        return 2
+def factorize(numb_to_check):
+    """"find two small numbers that multiply to give a given number"""
+    init_factor = 2
 
-    init_factor = 3
+    if numb_to_check < 2:
+        return
 
-    while init_factor * init_factor <= read_number:
-        if read_number % init_factor == 0:
-            return init_factor
-        else:
-            init_factor += 2
-    return 1
+    while numb_to_check % init_factor:
+        init_factor += 1
+    print("{:.0f}={:.0f}*{:.0f}".format(numb_to_check, numb_to_check / init_factor, init_factor))
 
 
 def read_from_file(file_name):
     try:
-        with open(file_name, mode="r") as file:
+        with open(file_name) as file:
             line = file.readline()
             while line != "":
-                number = int(line.strip())                
-                # number = int(line.split('\n')[0])
-                val = get_factors(number)
-                print("{}={}*{}".format(number, number//val, val))
+                number = int(line.split('\n')[0])
+                factorize(number)
                 line = file.readline()
-    except FileNotFoundError:
+    except (FileNotFoundError, ValueError, TypeError):
         pass
 
 
