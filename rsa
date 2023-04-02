@@ -4,51 +4,30 @@ Factorize numbers in a file into a product of two prime numbers
 """
 
 
-
-# def get_factors():
-#     try:
-#         file = sys.argv[1]
-#         with open(file) as f:
-#             for line_number in f:
-#                 line_number = int(line_number)
-#                 if line_number % 2 == 0:
-#                         print("{}={}*{}".format(line_number, line_number // 2, 2))
-#                         continue
-#                 i = 3
-#                 while i < line_number // 2:
-#                     if line_number % i == 0:
-#                         print("{}={}*{}".format(line_number, line_number // i, i))
-#                         break
-#                     i = i + 2
-#                 if i == (line_number // 2) + 1:
-#                     print("{}={}*{}".format(line_number, line_number, 1))
-#     except (IndexError):
-#         pass
-def get_factors(number):
-    factor1 = 2
-    factor2 = 0
-    if number % factor1 == 0:
-        factor2 = number//factor1
-        if test_prime(factor1) and test_prime(factor2):
-            return "{}={}*{}".format(number, factor2, factor1)
-    factor1 = 3
-    while factor1 < number // 2:
-        factor2 = number//factor1
-        if test_prime(factor1) and test_prime(factor2):
-            return "{}={}*{}".format(number, factor2, factor1)
-        factor1 += 2
-        factor2 = number//factor1
-        if test_prime(factor1) and test_prime(factor2):
-            return "{}={}*{}".format(number, factor2, factor1)
-
-def read_from_file(filename):
+def get_factors(numb_to_check):
+    """"find two small numbers that multiply to give a given number"""
     try:
-        with open(filename, mode="r") as file:
-            for line in file:
-                line = int(line)
-                print(get_factors(line))
-                    
-    except (FileNotFoundError, TypeError, IndexError, ValueError):
+        number = int(numb_to_check)
+        for itr in range(2, number + 1):
+            if number % itr == 0:
+                factor = number // itr
+                if test_prime(factor) is True and test_prime(itr) is True:
+                    print("{}={}*{}".format(number, factor, itr))
+                else:
+                    print("[...]")
+                break
+    except (TypeError, ZeroDivisionError, ValueError):
+        pass
+    return 0
+
+
+def read_from_file(file_name):
+    try:
+        with open(file_name) as file:
+            line = file.readline()
+            number = int(line.split('\n')[0])
+            get_factors(number)
+    except (FileNotFoundError, ValueError, TypeError):
         pass
 
 
@@ -62,7 +41,8 @@ def test_prime(val):
 
 if __name__ == "__main__":
     from sys import argv
+
     if len(argv) != 2:
         exit()
-    file_name = argv[1]
-    read_from_file(file_name)
+    filename = argv[1]
+    read_from_file(filename)
