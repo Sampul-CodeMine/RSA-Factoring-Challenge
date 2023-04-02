@@ -2,16 +2,17 @@
 """Program to read a set of numbers from a file and get the factors"""
 
 
-def factorize(numb_to_check):
+def get_factors(numb_to_check):
     """"find two small numbers that multiply to give a given number"""
-    init_factor = 2
-
-    if numb_to_check < 2:
-        return
-
-    while numb_to_check % init_factor:
-        init_factor += 1
-    print("{:.0f}={:.0f}*{:.0f}".format(numb_to_check, numb_to_check / init_factor, init_factor))
+    try:
+        number = int(numb_to_check)
+        for itr in range(2, number + 1):
+            if number % itr == 0:
+                print("{}={}*{}".format(number, number//itr, itr))
+                break
+    except (TypeError, ZeroDivisionError, ValueError):
+        pass
+    return 0
 
 
 def read_from_file(file_name):
@@ -20,7 +21,7 @@ def read_from_file(file_name):
             line = file.readline()
             while line != "":
                 number = int(line.split('\n')[0])
-                factorize(number)
+                get_factors(number)
                 line = file.readline()
     except (FileNotFoundError, ValueError, TypeError):
         pass
@@ -28,7 +29,7 @@ def read_from_file(file_name):
 
 if __name__ == "__main__":
     from sys import argv
-
+    
     if len(argv) != 2:
         exit()
     filename = argv[1]

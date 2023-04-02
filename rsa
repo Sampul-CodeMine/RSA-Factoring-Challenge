@@ -1,0 +1,68 @@
+#!/usr/bin/python3
+"""
+Factorize numbers in a file into a product of two prime numbers
+"""
+
+
+
+# def get_factors():
+#     try:
+#         file = sys.argv[1]
+#         with open(file) as f:
+#             for line_number in f:
+#                 line_number = int(line_number)
+#                 if line_number % 2 == 0:
+#                         print("{}={}*{}".format(line_number, line_number // 2, 2))
+#                         continue
+#                 i = 3
+#                 while i < line_number // 2:
+#                     if line_number % i == 0:
+#                         print("{}={}*{}".format(line_number, line_number // i, i))
+#                         break
+#                     i = i + 2
+#                 if i == (line_number // 2) + 1:
+#                     print("{}={}*{}".format(line_number, line_number, 1))
+#     except (IndexError):
+#         pass
+def get_factors(number):
+    factor1 = 2
+    factor2 = 0
+    if number % factor1 == 0:
+        factor2 = number//factor1
+        if test_prime(factor1) and test_prime(factor2):
+            return "{}={}*{}".format(number, factor2, factor1)
+    factor1 = 3
+    while factor1 < number // 2:
+        factor2 = number//factor1
+        if test_prime(factor1) and test_prime(factor2):
+            return "{}={}*{}".format(number, factor2, factor1)
+        factor1 += 2
+        factor2 = number//factor1
+        if test_prime(factor1) and test_prime(factor2):
+            return "{}={}*{}".format(number, factor2, factor1)
+
+def read_from_file(filename):
+    try:
+        with open(filename, mode="r") as file:
+            for line in file:
+                line = int(line)
+                print(get_factors(line))
+                    
+    except (FileNotFoundError, TypeError, IndexError, ValueError):
+        pass
+
+
+def test_prime(val):
+    output = ''
+    for x in range(2, val):
+        if val % x == 0:
+            return False
+    return val > 1
+
+
+if __name__ == "__main__":
+    from sys import argv
+    if len(argv) != 2:
+        exit()
+    file_name = argv[1]
+    read_from_file(file_name)
