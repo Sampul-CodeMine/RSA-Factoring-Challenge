@@ -13,8 +13,6 @@ def get_factors(numb_to_check):
                 factor = number // itr
                 if test_prime(factor) is True and test_prime(itr) is True:
                     print("{}={}*{}".format(number, factor, itr))
-                else:
-                    print("[...]")
                 break
     except (TypeError, ZeroDivisionError, ValueError):
         pass
